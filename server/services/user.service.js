@@ -6,11 +6,12 @@ export const getById = async () => {
     return result[0];
 }
 
-export const create = async () => {
+export const create = async (pass_hash) => {
+    
     const [result] = await pool.query(
         'INSERT INTO users (name, email) VALUES (?, ?, ?)',
         [full_name, email, pass_hash]
     );
-    return { id_user: result.id_user, full_name, email, pass_hash };
+    return { id_user: result.insertId, full_name, email, pass_hash };
 };
 
