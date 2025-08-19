@@ -16,11 +16,18 @@ export const getById = async (id) => {
     return result[0];
 };
 
-
 export const create = async (full_name, email, pass_hash) => {
     const [result] = await pool.query(
         'INSERT INTO users (full_name, email, pass_hash) VALUES (?, ?, ?)',
         [full_name, email, pass_hash]
     );
     return { id_user: result.insertId, full_name, email };
+};
+
+export const remove = async (full_name, email, pass_hash) => {
+    const [result] = await pool.query(
+        'DELETE FROM users WHERE id_user = ?',
+        [id_user]
+    );
+    return result.affectedRows > 0;
 };

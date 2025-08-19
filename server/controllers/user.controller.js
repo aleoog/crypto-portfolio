@@ -18,7 +18,6 @@ export const getUser = async (req, res) => {
 
 export const findOne = async (req, res) => {
     try {
-        // console.log('Email recibido:', req.params.email);
 
         const user = await userService.findOne(req.params.email);
 
