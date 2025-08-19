@@ -1,12 +1,18 @@
 import { Router } from 'express';
-import { signUp, signIn, signOut } from '../controllers/auth.controller.js';
+import { signUp } from '../controllers/auth.controller.js';
 
 const authRouter = Router();
 
-authRouter.post('/sign-up', (req, res) => { signUp });
+authRouter.post('/signup', (req, res) => { signUp });
 
-authRouter.post('/sign-in', (req, res) => { signIn });
+// authRouter.post('/signin', (req, res) => { signIn });
 
-authRouter.post('/sign-out', (req, res) => { signOut });
+// authRouter.post('/signout', (req, res) => { signOut });
+
+authRouter.get('/ping', (req, res) => {
+  console.log('Ping endpoint hit');
+  res.json({ message: 'pong' });
+});
+
 
 export default authRouter;

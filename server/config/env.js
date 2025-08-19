@@ -9,5 +9,7 @@ export const {
     DB_HOST, 
     DB_USER, 
     DB_PASSWORD, 
-    DB_DATABASE 
+    DB_DATABASE,
+    JWT_SECRET,
+    JWT_EXPIRES_IN
 } = process.env;
