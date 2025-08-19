@@ -11,10 +11,10 @@ const pool = mysql.createPool({
 
 (async () => {
     try {
-        const [rows] = await pool.query('SELECT 1 + 1 AS result');
-        console.log('DB connection OK, result:', rows[0].result);
+        const [rows] = await pool.query('SELECT @@port AS port');
+        console.log(`✅ DB connection OK on port ${rows[0].port}`);
     } catch (error) {
-        console.error('DB connection failed:', error.message);
+        console.error('❌ DB connection failed:', error.message);
     }
 })();
 

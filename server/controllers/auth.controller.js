@@ -15,11 +15,12 @@ export const signUp = async (req, res) => {
 
         const { full_name, email, password } = req.body;
 
-        
         const user = await userService.findOne(email);
+
         if (user) {
             const error = new Error('User already exists');
             error.statusCode = 400;
+
             throw error;
         }
 
@@ -28,7 +29,7 @@ export const signUp = async (req, res) => {
         const pass_hash = await bcrypt.hash(password, salt);
 
         
-        const newUser = await userService.create(full_name, email, pass_hash);
+        const newUser = await userService.create(full_name, email, password);
 
         
         const token = jwt.sign({ id_user: newUser.id_user }, JWT_SECRET,{ expiresIn: JWT_EXPIRES_IN });
