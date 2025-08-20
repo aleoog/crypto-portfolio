@@ -12,7 +12,7 @@ export const signUp = async (req, res) => {
         connection = await pool.getConnection();
         await connection.beginTransaction();
 
-        const { full_name, email, password } = req.body;
+        const { full_name, email, pass_hash } = req.body;
 
         const user = await userService.findOne(email);
 
@@ -24,9 +24,9 @@ export const signUp = async (req, res) => {
 
         
         const salt = await bcrypt.genSalt(10);
-        const pass_hash = await bcrypt.hash(password, salt);
+        const pass = await bcrypt.hash(pass_hash, salt);
         
-        const newUser = await userService.create(full_name, email, pass_hash);
+        const newUser = await userService.create(full_name, email, pass);
 
         const token = jwt.sign({ id_user: newUser.id_user }, JWT_SECRET,{ expiresIn: JWT_EXPIRES_IN });
 
@@ -59,7 +59,7 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
 
     try {
-        const { email, password } = req.body;
+        const { email, pass_hash } = req.body;
 
         const user = await userService.findOne(email);
 
@@ -69,7 +69,7 @@ export const signIn = async (req, res) => {
             throw error;
         }
 
-        const isValid = bcrypt.compare(password, user.pass_hash);
+        const isValid = await bcrypt.compare(pass_hash, user.pass_hash);
 
         if (!isValid) {
             const error = new Error('Invalid password');

@@ -1,18 +1,17 @@
 import { Router } from 'express';
 import { getUser, findOne } from '../controllers/user.controller.js';
+import authorize from '../middlewares/auth.middleware.js';
 
 const userRouter = Router();
 
-userRouter.get('/', (req, res) => {res.send({ title: 'sign up' })});
+// userRouter.get('/', );
 
-userRouter.get('/:id_user', getUser);
+userRouter.get('/:id_user', authorize, getUser);
 
 userRouter.get('/email/:email', findOne);
 
-userRouter.post('/', (req, res) => {res.send({ title: 'sign up' })});
+// userRouter.put('/:id_user', );
 
-userRouter.put('/:id_user', (req, res) => {res.send({ title: 'sign up' })});
-
-userRouter.delete('/:id_user', (req, res) => {res.send({ title: 'sign up' })});
+// userRouter.delete('/:id_user', );
 
 export default userRouter;  
